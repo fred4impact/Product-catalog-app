@@ -1,4 +1,4 @@
-# Migrating Your Application to Azure: A Complete Beginner's Guide to Azure DevOps CI/CD with Kubernetes
+# Migrating Your Microservice Application to Azure: A Complete Beginner to Intermediate Guide to Azure DevOps CI/CD with Kubernetes
 
 *Published on Medium | January 2025*
 

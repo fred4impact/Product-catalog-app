@@ -21,7 +21,9 @@ const ProductDetail = ({ product, onBack, productServiceUrl, ratingsServiceUrl }
 
   const fetchProductDetails = async () => {
     try {
-      const response = await fetch(`${productServiceUrl}/api/products/${product._id}`);
+      // Use relative URL - nginx proxies to product-service:5000
+      const apiUrl = productServiceUrl ? `${productServiceUrl}/api/products/${product._id}` : `/api/products/${product._id}`;
+      const response = await fetch(apiUrl);
       const data = await response.json();
       if (data.success) {
         setProductDetails(data.data);
@@ -34,7 +36,9 @@ const ProductDetail = ({ product, onBack, productServiceUrl, ratingsServiceUrl }
   const fetchRatings = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${ratingsServiceUrl}/api/ratings/product/${product._id}`);
+      // Use relative URL - nginx proxies to ratings-service:5001
+      const apiUrl = ratingsServiceUrl ? `${ratingsServiceUrl}/api/ratings/product/${product._id}` : `/api/ratings/product/${product._id}`;
+      const response = await fetch(apiUrl);
       const data = await response.json();
       if (data.success) {
         setRatings(data.data);

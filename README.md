@@ -18,7 +18,7 @@ This application demonstrates a microservices architecture with the following se
 
 ### Architecture Diagram
 
-![Architecture Diagram](images/product.jpg)
+![Architecture Diagram](images/product-diagram.jpg)
 
 ```
 ┌─────────────┐

@@ -105,11 +105,14 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        - REACT_APP_PRODUCT_SERVICE_URL=http://localhost:5002
-        - REACT_APP_RATINGS_SERVICE_URL=http://localhost:5003
+        # Use empty args for nginx reverse proxy (matches production setup)
+        # nginx will proxy /api/products -> product-service:5000
+        # nginx will proxy /api/ratings -> ratings-service:5001
+        - REACT_APP_PRODUCT_API=
+        - REACT_APP_RATINGS_API=
     container_name: product-catalog-frontend
     ports:
-      - "3000:80"
+      - "3000:80"  # Access frontend at http://localhost:3000
     depends_on:
       - product-service
       - ratings-service
