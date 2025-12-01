@@ -4,12 +4,17 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 
 # Accept build arguments
-ARG REACT_APP_PRODUCT_SERVICE_URL=http://localhost:5002
-ARG REACT_APP_RATINGS_SERVICE_URL=http://localhost:5003
+# Default to empty strings for nginx reverse proxy (relative URLs via nginx)
+# Can be overridden at build time: --build-arg REACT_APP_PRODUCT_API=http://product-service:5000
+#ARG REACT_APP_PRODUCT_SERVICE_URL=http://localhost:5000
+#ARG REACT_APP_RATINGS_SERVICE_URL=http://localhost:5001
+ARG REACT_APP_PRODUCT_API=
+ARG REACT_APP_RATINGS_API=
 
 # Set environment variables for build
-ENV REACT_APP_PRODUCT_SERVICE_URL=$REACT_APP_PRODUCT_SERVICE_URL
-ENV REACT_APP_RATINGS_SERVICE_URL=$REACT_APP_RATINGS_SERVICE_URL
+# Map ARG names to ENV names that React app expects
+ENV REACT_APP_PRODUCT_SERVICE_URL=$REACT_APP_PRODUCT_API
+ENV REACT_APP_RATINGS_SERVICE_URL=$REACT_APP_RATINGS_API
 
 # Copy package files
 COPY package*.json ./

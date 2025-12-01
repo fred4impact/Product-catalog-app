@@ -3,8 +3,10 @@ import './index.css';
 import ProductList from './components/ProductList';
 import ProductDetail from './components/ProductDetail';
 
-const PRODUCT_SERVICE_URL = process.env.REACT_APP_PRODUCT_SERVICE_URL || 'http://localhost:5000';
-const RATINGS_SERVICE_URL = process.env.REACT_APP_RATINGS_SERVICE_URL || 'http://localhost:5001';
+// Use relative URLs - nginx will proxy to backend services
+// This allows us to use only 1 LoadBalancer (Frontend) instead of 3
+const PRODUCT_SERVICE_URL = process.env.REACT_APP_PRODUCT_SERVICE_URL || '';
+const RATINGS_SERVICE_URL = process.env.REACT_APP_RATINGS_SERVICE_URL || '';
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -23,7 +25,9 @@ function App() {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${PRODUCT_SERVICE_URL}/api/products`);
+      // Use relative URL - nginx proxies to product-service:5000
+      const apiUrl = PRODUCT_SERVICE_URL || '/api/products';
+      const response = await fetch(apiUrl);
       const data = await response.json();
       
       if (data.success) {
